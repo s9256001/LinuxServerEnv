@@ -21,7 +21,7 @@
 		- USER CREATION: 使用者名稱 rd，密碼 a
 		- 安裝完選 Reboot
 		- 映像檔 存在 C:\Users\[使用者名稱]\VirtualBox VMs\ceserver\ceserver.vdi，可以複製備份用
-1. **設定內網 IP**
+0. **設定內網 IP**
 	- 以 root 登入
 	- 獲得自動分配到的 IP
 		- 啟動網卡: ifup enp0s3
@@ -31,20 +31,20 @@
 		- chmod u+x *.sh
 	- 執行設定內網 IP 的腳本
 		- ./setup_network.sh
-2. **安裝系統工具**
+0. **安裝系統工具**
 	- ./install_systool.sh
 		- 系統工具
 		- samba
 		- rsync
 		- docker
-3. **安裝 git**
+0. **安裝 git**
 	- ./install_git.sh
 		- git client
 		- docker gitlab/gitlab-ce
 	- Change your password
 		- 設定 root 密碼 (8 碼)
 		- Sign in: root 確認登入
-3. **安裝開發工具**
+0. **安裝開發工具**
 	- ./install_devtool.sh
 		- gcc、gcc-c++、gdb
 		- automake、cmake
