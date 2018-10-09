@@ -1,9 +1,9 @@
 #!/bin/bash
 source script_lib
 
-dev_common_path=/root/TestArea/LibBuild/dev_common
+dev_common_path=/root/LibBuild/dev_common
 build_output_dir_name=build_output
-lib_build_work_area=/root/TestArea/LibBuild
+lib_build_work_area=/root/LibBuild
 
 getInnerIP static_ip
 
