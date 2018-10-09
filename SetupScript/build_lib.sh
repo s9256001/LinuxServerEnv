@@ -163,15 +163,15 @@ function menu()
 	time=$(date '+%Y-%m-%d %H:%M:%S')
 	printc C_GREEN "================================================================\n"
 	printc C_GREEN "= build libraries"
-	printc C_WHITE " (IP: $static_ip, 目前時間: $time)\n"
+	printc C_WHITE " (IP: $static_ip, time: $time)\n"
 	printc C_GREEN "================================================================\n"
 	printc C_CYAN "  1. add library path\n"
-	printc C_CYAN "  2. hiredis\n"
-	printc C_CYAN "  3. MySQL connector/c\n"
-	printc C_CYAN "  4. zlib\n"
-	printc C_CYAN "  5. libuv\n"
-	printc C_CYAN "  6. OpenSSL\n"
-	printc C_CYAN "  7. uWebSockets\n"
+	printc C_CYAN "  11. hiredis\n"
+	printc C_CYAN "  12. MySQL connector/c\n"
+	printc C_CYAN "  13. zlib\n"
+	printc C_CYAN "  14. libuv\n"
+	printc C_CYAN "  15. OpenSSL\n"
+	printc C_CYAN "  16. uWebSockets\n"
 	printc C_CYAN "  q. Exit\n"
 	while true; do
 		read -p "Please Select:" cmd
@@ -179,22 +179,22 @@ function menu()
 			1)
 				add_lib_path
 				return 0;;
-			2)
+			11)
 				build_hiredis
 				return 0;;
-			3)
+			12)
 				build_mysql_connector_c
 				return 0;;
-			4)
+			13)
 				build_zlib
 				return 0;;
-			5)
+			14)
 				build_libuv
 				return 0;;
-			6)
+			15)
 				build_openssl
 				return 0;;
-			7)
+			16)
 				build_uwebsocket
 				return 0;;
 			[Qq]* )

@@ -12,7 +12,7 @@ function create_redis()
 {
 	echo 'create redis container...'
 	
-	docker run --detach --publish 6379:6379 --name $redis_container_name redis
+	docker run -e "TZ=Asia/Taipei" --detach --publish 6379:6379 --name $redis_container_name redis
 	docker exec -it $redis_container_name bash -c "redis-server --version"
 }
 
@@ -24,7 +24,7 @@ function create_mysql()
 	pushd $PWD
 	cd $mysql_docker_file_path
 	docker build -t my-mysql .
-	docker run --detach --publish 3306:3306 -e MYSQL_ROOT_PASSWORD=$mysql_passwd --name $mysql_container_name my-mysql
+	docker run -e "TZ=Asia/Taipei" --detach --publish 3306:3306 -e MYSQL_ROOT_PASSWORD=$mysql_passwd --name $mysql_container_name my-mysql
 	docker exec -it $mysql_container_name bash -c "mysql -V"
 	popd
 }
@@ -73,7 +73,7 @@ function menu()
 	time=$(date '+%Y-%m-%d %H:%M:%S')
 	printc C_GREEN "================================================================\n"
 	printc C_GREEN "= create containers"
-	printc C_WHITE " (IP: $static_ip, 目前時間: $time)\n"
+	printc C_WHITE " (IP: $static_ip, time: $time)\n"
 	printc C_GREEN "================================================================\n"
 	printc C_CYAN "  1. redis\n"
 	printc C_CYAN "  2. mysql\n"
