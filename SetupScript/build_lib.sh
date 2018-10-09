@@ -7,7 +7,7 @@ lib_build_work_area=/root/TestArea/LibBuild
 
 getInnerIP static_ip
 
-function create_dev_common_path
+function create_dev_common_path()
 {
 	mkdir -p $dev_common_path/include
 	mkdir -p $dev_common_path/lib
@@ -28,6 +28,7 @@ function add_lib_path()
 
 function build_hiredis()
 {
+	# https://github.com/redis/hiredis/issues/585
 	echo 'build hiredis...'
 
 	create_dev_common_path
@@ -47,6 +48,7 @@ function build_hiredis()
 
 function build_mysql_connector_c()
 {
+	# https://github.com/LuaDist/libmysql/blob/master/BUILD.unix
 	echo 'build MySQL connector/c...'
 	
 	create_dev_common_path
@@ -68,6 +70,7 @@ function build_mysql_connector_c()
 
 function build_zlib()
 {
+	# https://github.com/madler/zlib
 	echo 'build zlib...'
 	
 	create_dev_common_path
@@ -89,6 +92,7 @@ function build_zlib()
 
 function build_libuv()
 {
+	# https://github.com/libuv/libuv
 	echo 'build libuv...'
 	
 	create_dev_common_path
@@ -112,6 +116,7 @@ function build_libuv()
 
 function build_openssl()
 {
+	# https://github.com/openssl/openssl.git
 	echo 'build OpenSSL...'
 	
 	create_dev_common_path
@@ -135,6 +140,7 @@ function build_openssl()
 
 function build_uwebsocket()
 {
+	# https://github.com/uNetworking/uWebSockets/wiki/Misc.-details
 	echo 'build uWebSockets...'
 	
 	create_dev_common_path
