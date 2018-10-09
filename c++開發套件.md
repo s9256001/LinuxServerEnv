@@ -20,28 +20,28 @@ c++開發套件
 		- 偵錯 > Linux 主控台，可以看到遠端輸出結果
 0. **hiredis**
 	- Install 路徑
-		- /usr/local/include/hiredis
-		- /usr/local/lib
+		- include/hiredis
+		- lib
 		- libhiredis
 0. **MySQL connector/c**
 	- Install 路徑
-		- /usr/local/include/mysql (原路徑在 /usr/local/include，自己搬移到 /usr/local/include/mysql 下)
-		- /usr/local/lib
+		- include/mysql
+		- lib
 		- libmysql
 0. **zlib**
 	- Install 路徑
-		- /usr/local/include/zlib (原路徑在 /usr/local/include，自己搬移到 /usr/local/include/zlib 下)
-		- /usr/local/lib
+		- include/zlib
+		- lib
 		- libz
 0. **libuv**
 	- Install 路徑
-		- /usr/local/include/uv (原路徑在 /usr/local/include，自己搬移到 /usr/local/include/ub 下)
-		- /usr/local/lib
+		- include/uv
+		- lib
 		- libuv
 0. **OpenSSL**
 	- Install 路徑
-		- /usr/local/include (原路徑在 /root/TestArea/LibBuild/openssl/ssloutput/include，自己搬移到 /usr/local/include/openssl 下)
-		- /usr/local/lib (原路徑在 /root/TestArea/LibBuild/openssl/ssloutput/include/lib，自己搬移到 /usr/local/lib 下)
+		- include/openssl
+		- lib
 		- libcrypto, libssl	
 0. **uWebSockets**
 	- 相依套件
@@ -49,8 +49,8 @@ c++開發套件
 		- zlib 1.x
 		- libuv 1.3+ or Boost.Asio 1.x (both optional on Linux)
 	- Install 路徑
-		- /usr/local/include/uWS (原路徑在 /usr/include，自己搬移到 /usr/local/include 下)
-		- /usr/local/lib64 (原路徑在 /usr/lib64，自己搬移到 /usr/local/lib64 下)
+		- include/uWS
+		- lib64
 		- libuWS
 	- 測試時需開通 port
 	~~~
