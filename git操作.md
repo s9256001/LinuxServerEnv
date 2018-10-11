@@ -23,6 +23,9 @@ git操作
 		- New project
 		- 勾選 Initialize repository with a README
 		- Create project
+	- 設定 lfs
+		- Settings > General > Permissions > Git Large File Storage 啟用，Save changes
+		- client 端 source tree 請在 .gitattributes 加入 lfs 設定
 0. **新增 project maintainer**
 	- 新增 project maintainer
 		- root 登入
