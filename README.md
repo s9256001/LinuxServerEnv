@@ -8,3 +8,4 @@ an establishment note of linux server environment
 - c++ lib: hiredis, MySQL connector/c, zlib, libuv, OpenSSL, uWebSockets
 - docker container: gitlab, redis, mysql
 - gitlab: backup, restore
+- vs2017 test linux project: hiredis, mysql, uWebSockets
