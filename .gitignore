@@ -9,7 +9,6 @@
 *.log
 *.obj
 *.sdf
-*.map
 *.ilk
 *.opendb
 *.dmp
