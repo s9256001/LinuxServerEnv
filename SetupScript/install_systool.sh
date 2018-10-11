@@ -99,7 +99,7 @@ function install_docker()
 	yum -y install docker-ce || return 1
 	
 	docker_conf_name=/etc/docker/daemon.json
-	(jq -n '{"live-restore": true') > $docker_conf_name
+	(jq -n '{"live-restore": true'}) > $docker_conf_name
 	
 	systemctl restart docker
 	systemctl enable docker
