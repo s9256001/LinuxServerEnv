@@ -56,4 +56,3 @@ Executable
 server/x64/Debug
 server/tools/Debug(MySQL)
 *.ilk
-*.exe
