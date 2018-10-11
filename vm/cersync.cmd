@@ -7,7 +7,7 @@ if EXIST static_ip.map (
 	goto:eof
 )
 
-set SYNC_USER=root
+set SYNC_USER=rd
 set SYNC_PWD=a
 set SYNC_SRV=%STATIC_IP%:873
 set LOCAL_REPOSITORY_BASE=E:\WorkPlace\cegame\storage\

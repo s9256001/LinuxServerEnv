@@ -3,7 +3,6 @@ source script_lib
 
 user_name=rd
 passwd=a
-root_passwd=a
 
 function setup_sys()
 {
@@ -78,11 +77,11 @@ function install_rsync()
 	sed "s/^[ \t]*//" -i $rsync_conf_name
 	crudini --set $rsync_conf_name '' 'uid' root
 	crudini --set $rsync_conf_name '' 'gid' root
-	crudini --set $rsync_conf_name '' 'auth users' root
+	crudini --set $rsync_conf_name '' 'auth users' $user_name
 	crudini --set $rsync_conf_name '' 'secrets file' $rsync_secrets
 	crudini --set $rsync_conf_name '' 'read only' no
 	crudini --set $rsync_conf_name '' 'charset' utf-8
-	(echo "root:"$root_passwd) > $rsync_secrets
+	(echo $user_name":"$passwd) > $rsync_secrets
 	chmod 600 /etc/rsyncd.secrets
 	
 	rsync_port=873
