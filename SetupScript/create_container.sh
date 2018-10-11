@@ -12,7 +12,9 @@ function create_redis()
 {
 	echo 'create redis container...'
 	
-	docker run -e "TZ=Asia/Taipei" --detach --publish 6379:6379 --name $redis_container_name redis
+	redis_host_data=/storage/redis/data
+	redis_container_data=/data
+	docker run -e "TZ=Asia/Taipei" -v $redis_host_data:$redis_container_data --detach --publish 6379:6379 --name $redis_container_name redis
 	docker exec -it $redis_container_name bash -c "redis-server --version"
 }
 
@@ -23,8 +25,10 @@ function create_mysql()
 	
 	pushd $PWD
 	cd $mysql_docker_file_path
+	mysql_host_data=/storage/mysql/data
+	mysql_container_data=/var/lib/mysql
 	docker build -t my-mysql .
-	docker run -e "TZ=Asia/Taipei" --detach --publish 3306:3306 -e MYSQL_ROOT_PASSWORD=$mysql_passwd --name $mysql_container_name my-mysql
+	docker run -e "TZ=Asia/Taipei" -v $mysql_host_data:$mysql_container_data --detach --publish 3306:3306 -e MYSQL_ROOT_PASSWORD=$mysql_passwd --name $mysql_container_name my-mysql
 	docker exec -it $mysql_container_name bash -c "mysql -V"
 	popd
 }

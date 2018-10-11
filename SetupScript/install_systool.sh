@@ -3,6 +3,17 @@ source script_lib
 
 user_name=rd
 passwd=a
+root_passwd=a
+
+function setup_sys()
+{
+	echo 'setup sys...'
+	setsebool -P rsync_full_access 1
+	
+	# add sudoer
+	f=/etc/sudoers
+	file_rline $f '^'$user_name'.*' ''$user_name'     ALL=(ALL)       ALL'
+}
 
 function install_systools()
 {
@@ -61,15 +72,22 @@ function install_rsync()
 	echo 'install rsync...'
 	yum install -y rsync || return 1
 	
+	# we use $user_name to handle the rsync job
 	rsync_conf_name=/etc/rsyncd.conf
 	rsync_secrets=/etc/rsyncd.secrets
 	sed "s/^[ \t]*//" -i $rsync_conf_name
-	crudini --set $rsync_conf_name '' 'uid' $user_name
-	crudini --set $rsync_conf_name '' 'auth users' $user_name
+	crudini --set $rsync_conf_name '' 'uid' root
+	crudini --set $rsync_conf_name '' 'gid' root
+	crudini --set $rsync_conf_name '' 'auth users' root
 	crudini --set $rsync_conf_name '' 'secrets file' $rsync_secrets
 	crudini --set $rsync_conf_name '' 'read only' no
-	(echo $user_name":"$passwd) > $rsync_secrets
+	crudini --set $rsync_conf_name '' 'charset' utf-8
+	(echo "root:"$root_passwd) > $rsync_secrets
 	chmod 600 /etc/rsyncd.secrets
+	
+	rsync_port=873
+	firewall-cmd --permanent --zone=public --add-port=$rsync_port/tcp
+	firewall-cmd --reload
 	
 	systemctl restart rsyncd
 	systemctl enable rsyncd
@@ -86,6 +104,9 @@ function install_docker()
 	
 	systemctl restart docker
 	systemctl enable docker
+	
+	# allow user can access docker
+	sudo usermod -a -G docker $user_name
 }
 
 function setup_locale()
@@ -97,6 +118,8 @@ function setup_locale()
 	# assist chrony
 	timedatectl set-ntp yes
 }
+
+setup_sys
 
 install_systools
 if [ $? -ne 0 ]; then
