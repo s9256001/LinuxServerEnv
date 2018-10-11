@@ -41,6 +41,7 @@
 	- ./install_git.sh
 		- git client
 		- docker gitlab/gitlab-ce
+	- 手動在 C:\WINDOWS\system32\drivers\etc\hosts 加入 $git_server_ip  git.ce.com.tw
 	- Change your password
 		- 設定 root 密碼 (8 碼)
 		- Sign in: root 確認登入
