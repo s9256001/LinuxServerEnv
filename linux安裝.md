@@ -28,7 +28,7 @@
 		- 取得分配到的 IP 位置: hostname -I
 	- 複製安裝用的腳本
 		- cd SetupScript
-		- chmod u+x *.sh
+		- chmod +x *.sh
 	- 執行設定內網 IP 的腳本
 		- ./setup_network.sh
 0. **安裝系統工具**

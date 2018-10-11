@@ -35,7 +35,7 @@ git操作
 0. **commit**
 	~~~
 	cd server
-	touch test.txt
+	(echo test) > test.txt
 	git add test.txt
 	git commit -m "add test.txt"
 	git push -u origin master
