@@ -22,12 +22,12 @@ function install_gitlab()
 	gitlab_host_backup=/storage/gitlab/backups
 	gitlab_container_backup=/var/opt/gitlab/backups
 	docker image pull gitlab/gitlab-ce
+	# --env for external_url for lfs
+	# --publish for 80 port for lfs
 	docker run -e "TZ=Asia/Taipei" \
 		-v $gitlab_host_backup:$gitlab_container_backup \
-		# external_url for lfs
 		--env GITLAB_OMNIBUS_CONFIG="external_url 'http://"$gitlab_ext_url"'; gitlab_rails['lfs_enabled'] = true;" \
 		--detach --restart always \
-		# 80 port for lfs
 		--publish $gitlab_port:80 --publish 80:80 \
 		--name $gitlab_container_name gitlab/gitlab-ce
 	firewall-cmd --permanent --zone=public --add-port=$gitlab_port/tcp
