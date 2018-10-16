@@ -50,7 +50,6 @@ function install_samba()
 	systemctl start smb
 	systemctl start nmb
 	
-	setsebool -P samba_enable_home_dirs on
 	firewall-cmd --permanent --zone=public --add-service=samba
 	firewall-cmd --reload
 	
@@ -60,6 +59,10 @@ function install_samba()
 	crudini --set $samba_conf_name 'homes' 'wide links' yes
 	crudini --set $samba_conf_name 'global' 'unix extensions' no
 	crudini --set $samba_conf_name 'global' 'acl allow execute always' True
+	crudini --set $samba_conf_name 'share' 'comment' share
+	crudini --set $samba_conf_name 'share' 'path' /home/$user_name/share
+	crudini --set $samba_conf_name 'share' 'read only' no
+	crudini --set $samba_conf_name 'share' 'browsable' yes
 
 	service smb restart
 	
