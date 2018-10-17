@@ -59,10 +59,13 @@ function install_samba()
 	crudini --set $samba_conf_name 'homes' 'wide links' yes
 	crudini --set $samba_conf_name 'global' 'unix extensions' no
 	crudini --set $samba_conf_name 'global' 'acl allow execute always' True
+	samba_share_name=share
 	crudini --set $samba_conf_name 'share' 'comment' share
-	crudini --set $samba_conf_name 'share' 'path' /home/$user_name/share
+	crudini --set $samba_conf_name 'share' 'path' /home/$user_name/$samba_share_name
 	crudini --set $samba_conf_name 'share' 'read only' no
 	crudini --set $samba_conf_name 'share' 'browsable' yes
+	
+	su $user_name bash -c "mkdir ~/"$samba_share_name
 
 	service smb restart
 	
