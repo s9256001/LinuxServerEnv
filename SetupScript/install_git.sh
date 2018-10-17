@@ -10,6 +10,8 @@ function install_git()
 	echo 'install git client...'
 	yum -y install git || return 1
 	yum -y install git-lfs || return 1
+	
+	git config --global core.autocrlf false
 }
 
 function install_gitlab()
