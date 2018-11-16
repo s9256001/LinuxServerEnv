@@ -60,9 +60,9 @@ function test_mysql()
 	
 	mysql_test_sql="\
 show databases;\
-use casino;\
+use cegame;\
 show tables;\
-select * from acc limit 10;\
+select * from account limit 10;\
 "
 	mysql_test_command="mysql -uroot -p"$mysql_passwd" -e '"$mysql_test_sql"'"
 	docker exec -it $mysql_container_name bash -c "$mysql_test_command"
