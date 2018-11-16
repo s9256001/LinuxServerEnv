@@ -5,6 +5,7 @@ redis_container_name=my-redis
 mysql_passwd=1234
 mysql_container_name=my-mysql
 mysql_docker_file_path=/root/DockerArea/MySQL/
+mysql_db_name=cegame
 
 getInnerIP static_ip
 
@@ -40,6 +41,10 @@ function create_mysql()
 		--name $mysql_container_name my-mysql
 	docker exec -it $mysql_container_name bash -c "mysql -V"
 	popd
+	
+	mysql_host_backup=/storage/mysql/backups
+	(crontab -l; echo "0 2 * * * /bin/docker exec "$mysql_container_name" sh -c 'exec mysqldump -uroot -p\"\$MYSQL_ROOT_PASSWORD\" "$mysql_db_name"' > "$mysql_host_backup"/"$mysql_db_name"-\`date +\"\%Y-\%m-\%d\"\`.sql") | crontab
+	(crontab -l; echo "0 3 * * * find $mysql_host_backup/*.sql -mtime +6 -type f -delete") | crontab
 }
 
 function test_redis()
