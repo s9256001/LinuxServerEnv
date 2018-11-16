@@ -43,6 +43,7 @@ function create_mysql()
 	popd
 	
 	mysql_host_backup=/storage/mysql/backups
+	mkdir $mysql_host_backup
 	(crontab -l; echo "0 2 * * * /bin/docker exec "$mysql_container_name" sh -c 'exec mysqldump -uroot -p\"\$MYSQL_ROOT_PASSWORD\" "$mysql_db_name"' > "$mysql_host_backup"/"$mysql_db_name"-\`date +\"\%Y-\%m-\%d\"\`.sql") | crontab
 	(crontab -l; echo "0 3 * * * find $mysql_host_backup/*.sql -mtime +6 -type f -delete") | crontab
 }
