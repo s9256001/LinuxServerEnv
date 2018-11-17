@@ -32,11 +32,12 @@ function create_mysql()
 	cd $mysql_docker_file_path
 	mysql_host_data=/storage/mysql/data
 	mysql_container_data=/var/lib/mysql
+	mysql_port=3306
 	docker build -t my-mysql .
 	docker run -e "TZ=Asia/Taipei" \
 		-v $mysql_host_data:$mysql_container_data \
 		--detach \
-		--publish 3306:3306 \
+		--publish $mysql_port:$mysql_port \
 		-e MYSQL_ROOT_PASSWORD=$mysql_passwd \
 		--name $mysql_container_name my-mysql
 	docker exec -it $mysql_container_name bash -c "mysql -V"
@@ -46,6 +47,9 @@ function create_mysql()
 	mkdir $mysql_host_backup
 	(crontab -l; echo "0 2 * * * /bin/docker exec "$mysql_container_name" sh -c 'exec mysqldump -uroot -p\"\$MYSQL_ROOT_PASSWORD\" "$mysql_db_name"' > "$mysql_host_backup"/"$mysql_db_name"-\`date +\"\%Y-\%m-\%d\"\`.sql") | crontab
 	(crontab -l; echo "0 3 * * * find $mysql_host_backup/*.sql -mtime +6 -type f -delete") | crontab
+	
+	firewall-cmd --permanent --zone=public --add-port=$mysql_port/tcp
+	firewall-cmd --reload
 }
 
 function test_redis()
