@@ -66,6 +66,7 @@ function commit_server()
 	cd /root/Server/env
 	commit_comment="[src] add. linux server 上版。"
 	askDefault "commit comment" "commit_comment"
+	git add *.out
 	git commit -m "$commit_comment"
 	git push origin master
 	popd
