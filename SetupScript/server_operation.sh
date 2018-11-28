@@ -47,6 +47,9 @@ function build_server()
 	git pull
 	cd /root/Server/env
 	git pull
+	cd /root/Server/env/server/linux/uuidgen
+	./uuidgen
+	cp server_uuid ../server_uuid
 	popd
 
 	docker run -it --rm \
