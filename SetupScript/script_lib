@@ -193,7 +193,7 @@ function askDefault()
 	varname=$2
 	default=${!varname}
 	
-	read -p "$msg($default)?" userInput
+	read -r -p "$msg($default)?" userInput
 	if ! [ -z "$default" ]; then
 		userInput=${userInput:-$default}
 	fi
