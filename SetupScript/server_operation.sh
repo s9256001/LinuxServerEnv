@@ -132,10 +132,10 @@ function check_server_status()
 {
 	echo 'check server status...'
 	
-	docker ps -f name=data_server --format "table {{.Names}}\t{{.Ports}}\t{{.Status}}"
-	docker ps -f name=login_server --format "table {{.Names}}\t{{.Ports}}\t{{.Status}}"
-	docker ps -f name=lobby_server --format "table {{.Names}}\t{{.Ports}}\t{{.Status}}"
-	docker ps -f name=game_server --format "table {{.Names}}\t{{.Ports}}\t{{.Status}}"
+	docker ps -f name=data_server --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
+	docker ps -f name=login_server --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
+	docker ps -f name=lobby_server --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
+	docker ps -f name=game_server --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
 }
 
 function menu()
