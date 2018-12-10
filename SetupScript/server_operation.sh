@@ -76,6 +76,19 @@ function commit_server()
 	popd
 }
 
+function pull_server_env()
+{
+	echo 'pull server env...'
+	
+	go_host_env=/root/Server/env
+	go_container_env=/go/env
+	
+	pushd $PWD
+	cd /root/Server/env
+	git pull
+	popd
+}
+
 function start_server()
 {
 	echo 'start server...'
@@ -138,6 +151,27 @@ function check_server_status()
 	docker ps -f name=game_server --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
 }
 
+function create_nginx()
+{
+	echo 'create nginx...'
+	
+	nginx_host_backend=/root/Server/env/server/backend
+	nginx_container_backend=/usr/share/nginx/html/backend
+	nginx_host_client=/root/Server/env/client
+	nginx_container_client=/usr/share/nginx/html/client
+	nginx_port=8080
+	
+	docker run --detach --rm \
+		-e "TZ=Asia/Taipei" \
+		-v $nginx_host_backend:$nginx_container_backend \
+		-v $nginx_host_client:$nginx_container_client \
+		--publish $nginx_port:80 \
+		--name my-nginx nginx
+		
+	firewall-cmd --permanent --zone=public --add-port=$nginx_port/tcp
+	firewall-cmd --reload
+}
+
 function menu()
 {
 	time=$(date '+%Y-%m-%d %H:%M:%S')
@@ -149,9 +183,11 @@ function menu()
 	printc C_CYAN "  2. setup server firewall\n"
 	printc C_CYAN "  11. build server\n"
 	printc C_CYAN "  12. commit server\n"
+	printc C_CYAN "  13. push server env\n"
 	printc C_CYAN "  21. start server\n"
 	printc C_CYAN "  22. stop server\n"
 	printc C_CYAN "  23. check server status\n"
+	printc C_CYAN "  31. create nginx\n"
 	printc C_CYAN "  q. Exit\n"
 	while true; do
 		read -p "Please Select:" cmd
@@ -168,6 +204,9 @@ function menu()
 			12)
 				commit_server
 				return 0;;
+			13)
+				pull_server_env
+				return 0;;
 			21)
 				start_server
 				return 0;;
@@ -176,6 +215,9 @@ function menu()
 				return 0;;
 			23)
 				check_server_status
+				return 0;;
+			31)
+				create_nginx
 				return 0;;
 			[Qq]* )
 				return 1;;
