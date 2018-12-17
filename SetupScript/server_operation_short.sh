@@ -116,6 +116,14 @@ function start_server()
 		--publish 12501:12501 \
 		--name game_server --init golang:latest \
 		/bin/sh -c "cd $server_container_env/game_server && ./gameserver.out"
+		
+	sleep $sleep_secs
+	docker run --detach --rm \
+		-e "TZ=Asia/Taipei" \
+		-v $server_host_env:$server_container_env \
+		--publish 12601:12601 \
+		--name api_server --init golang:latest \
+		/bin/sh -c "cd $server_container_env/api_server && ./apiserver.out"
 }
 
 function stop_server()
@@ -126,6 +134,7 @@ function stop_server()
 	docker stop login_server
 	docker stop lobby_server
 	docker stop game_server
+	docker stop api_server
 }
 
 function check_server_status()
@@ -136,6 +145,7 @@ function check_server_status()
 	docker ps -f name=login_server --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
 	docker ps -f name=lobby_server --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
 	docker ps -f name=game_server --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
+	docker ps -f name=api_server --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
 }
 
 function menu()
