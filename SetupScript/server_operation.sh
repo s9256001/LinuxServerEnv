@@ -194,7 +194,7 @@ function menu()
 	printc C_CYAN "  2. setup server firewall\n"
 	printc C_CYAN "  11. build server\n"
 	printc C_CYAN "  12. commit server\n"
-	printc C_CYAN "  13. push server env\n"
+	printc C_CYAN "  13. pull server env\n"
 	printc C_CYAN "  21. start server\n"
 	printc C_CYAN "  22. stop server\n"
 	printc C_CYAN "  23. check server status\n"
