@@ -15,12 +15,16 @@ function create_redis()
 	
 	redis_host_data=/storage/redis/data
 	redis_container_data=/data
+	redis_port=6379
 	docker run -e "TZ=Asia/Taipei" \
 		-v $redis_host_data:$redis_container_data \
 		--detach \
-		--publish 6379:6379 \
+		--publish $redis_port:$redis_port \
 		--name $redis_container_name redis
 	docker exec -it $redis_container_name bash -c "redis-server --version"
+	
+	firewall-cmd --permanent --zone=public --add-port=$redis_port/tcp
+	firewall-cmd --reload
 }
 
 function create_mysql()
@@ -91,6 +95,11 @@ select * from mysql.user where User='root';\
 	docker exec -it $mysql_container_name bash -c "$mysql_test_command"
 }
 
+function redis_client()
+{
+	docker run -it --link $redis_container_name:$redis_container_name --rm redis sh -c 'exec redis-cli -h '$redis_container_name' -p 6379'
+}
+
 function menu()
 {
 	time=$(date '+%Y-%m-%d %H:%M:%S')
@@ -103,6 +112,7 @@ function menu()
 	printc C_CYAN "  11. test redis\n"
 	printc C_CYAN "  12. test mysql\n"
 	printc C_CYAN "  21. fix mysql\n"
+	printc C_CYAN "  31. redis client\n"
 	printc C_CYAN "  q. Exit\n"
 	while true; do
 		read -p "Please Select:" cmd
@@ -121,6 +131,9 @@ function menu()
 				return 0;;
 			21)
 				fix_mysql
+				return 0;;
+			31)
+				redis_client
 				return 0;;
 			[Qq]* )
 				return 1;;
