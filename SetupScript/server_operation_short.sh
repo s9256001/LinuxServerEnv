@@ -76,6 +76,19 @@ function commit_server()
 	popd
 }
 
+function pull_server_env()
+{
+	echo 'pull server env...'
+	
+	go_host_env=/root/Server/env
+	go_container_env=/go/env
+	
+	pushd $PWD
+	cd /root/Server/env
+	git pull
+	popd
+}
+
 function start_server()
 {
 	echo 'start server...'
@@ -155,6 +168,7 @@ function menu()
 	printc C_GREEN "= server operation"
 	printc C_WHITE " (IP: $static_ip, time: $time)\n"
 	printc C_GREEN "================================================================\n"
+	printc C_CYAN "  13. pull server env\n"
 	printc C_CYAN "  21. start server\n"
 	printc C_CYAN "  22. stop server\n"
 	printc C_CYAN "  23. check server status\n"
@@ -162,6 +176,9 @@ function menu()
 	while true; do
 		read -p "Please Select:" cmd
 		case $cmd in
+			13)
+				pull_server_env
+				return 0;;
 			21)
 				start_server
 				return 0;;
