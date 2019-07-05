@@ -44,6 +44,7 @@ function build_server()
 	
 	pushd $PWD
 	cd /root/Server/src
+	git checkout -- ./src/cegame/go.mod
 	git pull
 	cd /root/Server/env
 	git pull
