@@ -7,7 +7,7 @@ gitlab_port=3000
 gitlab_ext_url=git.ce.com.tw
 gitlab_url_prefix=http://$gitlab_user:$gitlab_passwd@$gitlab_ext_url:$gitlab_port
 
-go_version=1.11.1
+go_version=1.12.4
 go_container_name=my-golang
 
 function clone_platform()
@@ -29,6 +29,7 @@ function setup_platform_firewall()
 	firewall-cmd --permanent --zone=public --add-port=15201/tcp
 	firewall-cmd --permanent --zone=public --add-port=15301/tcp
 	firewall-cmd --permanent --zone=public --add-port=15401/tcp
+	firewall-cmd --permanent --zone=public --add-port=15601/tcp 
 	firewall-cmd --reload
 }
 
@@ -117,6 +118,16 @@ function start_platform()
 		--publish 15401:15401 \
 		--name pf_log --init golang:latest \
 		/bin/sh -c "cd $server_container_env/log && ./log.out"
+		
+		
+	sleep $sleep_secs
+
+	docker run --detach --rm \
+		-e "TZ=Asia/Taipei" \
+		-v $server_host_env:$server_container_env \
+		--publish 15601:15601 \
+		--name pf_chatserver --init golang:latest \
+		/bin/sh -c "cd $server_container_env/chatserver && ./chatserver.out"
 }
 
 function stop_platform()
@@ -127,6 +138,7 @@ function stop_platform()
 	docker stop pf_api
 	docker stop pf_frontend
 	docker stop pf_log
+	docker stop pf_chatserver
 }
 
 function check_platform_status()
@@ -137,6 +149,7 @@ function check_platform_status()
 	docker ps -f name=pf_api			 --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
 	docker ps -f name=pf_frontend		 --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
 	docker ps -f name=pf_log			 --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
+	docker ps -f name=pf_chatserver		 --format "{{.Names}}\t{{.Ports}}\t{{.Status}}"
 }
 
 
